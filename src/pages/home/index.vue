@@ -52,7 +52,6 @@ export default {
       url: 'http://157.122.54.189:9088/image/v3/homepage/vertical', //开发者服务器接口地址",
     })
     .then(res=>{
-      console.log(res);
       
     })
   },
