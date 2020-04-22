@@ -63,6 +63,9 @@ export default {
   },
   mounted() {
     this.getData();
+    uni.setNavigationBarTitle({
+      title:"推荐"
+    })
   },
   methods: {
     handleToLower() {
@@ -105,7 +108,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .recommend_view {
   height: calc(100vh - 36px);
 }

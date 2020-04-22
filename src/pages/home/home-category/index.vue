@@ -7,7 +7,14 @@
 
 <script>
 export default {
+data(){
 
+  },
+  mounted() {
+    uni.setNavigationBarTitle({
+      title:"分类"
+    })
+  },
 }
 </script>
 
