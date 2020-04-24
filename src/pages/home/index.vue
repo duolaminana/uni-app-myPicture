@@ -2,7 +2,7 @@
   <view>
     <view class="home_tab">
       <view class="home_tab_title">
-        <view class="title-inner">
+        <view class="title_inner">
           <uni-segmented-control
             :current="current"
             :values="items.map(v=>v.title)"
@@ -80,7 +80,7 @@ export default {
   .home_tab{
     .home_tab_title{
       position: relative;
-      .title-inner{
+      .title_inner{
         width: 60%;
         margin: 0 auto;
       }

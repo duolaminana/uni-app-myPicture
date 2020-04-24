@@ -139,8 +139,6 @@ export default {
     .cate_item {
       width: 33.33%;
       border: 5rpx solid #fff;
-      image {
-      }
     }
   }
 }
