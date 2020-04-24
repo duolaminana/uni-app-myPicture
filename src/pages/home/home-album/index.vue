@@ -74,7 +74,6 @@ export default {
         url: "http://157.122.54.189:9088/image/v1/wallpaper/album",
         data: this.params
       }).then(result => {
-        console.log(result);
         if (this.banner.length == 0) {
           this.banner = result.res.banner;
         }
@@ -146,8 +145,8 @@ export default {
         display: flex;
         justify-content: flex-end;
         .album_attention {
-          color: #d83a88;
-          border: 1rpx solid #d83a88;
+          color: $color;
+          border: 1rpx solid $color;
           padding: 10rpx;
         }
       }

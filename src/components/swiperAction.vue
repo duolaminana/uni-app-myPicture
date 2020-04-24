@@ -1,5 +1,7 @@
 <template>
-  <view class="demo" @touchstart="handleTouchStart" @touchend="handleTouchEnd"></view>
+  <view @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+    <slot></slot>
+  </view>
 </template>
 
 <script>
@@ -11,50 +13,37 @@ export default {
       startY: 0,
       endTime: 0,
       endX: 0,
-      endY: 0,
-      direction:""
+      endY: 0
     };
   },
   methods: {
     handleTouchStart(event) {
-      console.log(event);
-      console.log("按下的X坐标----" + event.changedTouches[0].clientX);
-      console.log("按下的Y坐标----" + event.changedTouches[0].clientY);
-      console.log(Date.now());
       this.startTime = Date.now();
       this.startX = event.changedTouches[0].clientX;
       this.startY = event.changedTouches[0].clientY;
     },
     handleTouchEnd(event) {
-      console.log(event);
-      console.log("离开的X坐标----" + event.changedTouches[0].clientX);
-      console.log("离开的Y坐标----" + event.changedTouches[0].clientY);
-      console.log(Date.now());
       this.endTime = Date.now();
       this.endX = event.changedTouches[0].clientX;
       this.endY = event.changedTouches[0].clientY;
+      let direction = "";
       if (this.endTime - this.startTime > 2000) {
         return;
       }
-      
 
       if (Math.abs(this.endX - this.startX) > 10) {
         this.endX - this.startX > 0
-          ? (this.direction = "right")
-          : (this.direction = "left");
+          ? (direction = "right")
+          : (direction = "left");
       } else {
         return;
       }
-      console.log(this.direction);
+      this.$emit("swiperAction", { direction });
     }
   }
 };
 </script>
+</script>
 
 <style>
-.demo {
-  width: 100%;
-  height: 500rpx;
-  background-color: blue;
-}
 </style>

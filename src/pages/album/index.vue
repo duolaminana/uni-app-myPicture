@@ -19,8 +19,10 @@
 
     <!-- 列表 -->
     <view class="album_list">
-      <view class="album_item" v-for="item in albumList" :key="item.id">
+      <view class="album_item" v-for="(item,index) in albumList" :key="item.id">
+        <go-detail :list="albumList" :index="index">
         <image :src="item.img" mode="aspectFill" />
+        </go-detail>
       </view>
     </view>
   </view>
@@ -28,6 +30,7 @@
 
 <script>
 import moment from "moment";
+import goDetail from "@/components/goDetail";
 export default {
   data() {
     return {
@@ -44,8 +47,12 @@ export default {
       wallpaper: []
     };
   },
+  components: {
+    goDetail
+  },
   onLoad(e) {
-    this.id = e.id;
+    this.id="5d5f8e45e7bce75ae7fb8278";
+    // this.id = e.id;
     console.log(this.id);
     this.getData();
   },
@@ -69,7 +76,6 @@ export default {
         url: `http://157.122.54.189:9088/image/v1/wallpaper/album/${this.id}/wallpaper`,
         data: this.params
       }).then(result => {
-        console.log(result);this.album
         if (Object.keys(this.album).length === 0) {
           this.album = result.res.album;
         }
@@ -92,8 +98,8 @@ export default {
 <style lang="scss" scoped>
 .album_bg {
   position: relative;
-  image {
-  }
+  // image {
+  // }
   .album_info {
     position: absolute;
     width: 100%;
@@ -114,7 +120,7 @@ export default {
       line-height: 60rpx;
       text-align: center;
       border-radius: 10rpx;
-      background-color: #d83a88;
+      background-color: $color;
       color: #fff;
     }
   }
@@ -135,8 +141,8 @@ export default {
     }
   }
 
-  .album_author_desc {
-  }
+  // .album_author_desc {
+  // }
 }
 .album_list {
   display: flex;

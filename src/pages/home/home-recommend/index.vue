@@ -7,9 +7,14 @@
   >
     <!-- 推荐 -->
     <view class="recommend_wrap">
-      <view class="recommend_item" v-for="item in recommendList" :key="item.id">
+      <navigator
+        :url="`/pages/album/index?id=${item.target}`"
+        class="recommend_item"
+        v-for="item in recommendList"
+        :key="item.id"
+      >
         <image mode="widthFix" :src="item.thumb" />
-      </view>
+      </navigator>
     </view>
 
     <!-- 月份 -->
@@ -25,8 +30,10 @@
         <view class="monthes_title_more">更多></view>
       </view>
       <view class="monthes_content">
-        <view class="monthes_item" v-for="item in monthes.items" :key="item.id">
-          <image :src="item.thumb+item.rule.replace('$<Height>',360)" mode="scaleToFill" />
+        <view class="monthes_item" v-for="(item,index) in monthes.items" :key="item.id">
+          <go-detail :list="monthes.items" :index="index">
+            <image :src="item.thumb+item.rule.replace('$<Height>',360)" mode="scaleToFill" />
+          </go-detail>
         </view>
       </view>
     </view>
@@ -37,8 +44,10 @@
         <text>热门</text>
       </view>
       <view class="hots_content">
-        <view class="hot_item" v-for="item in hots" :key="item.id">
-          <image :src="item.thumb" mode="scaleToFill" />
+        <view class="hot_item" v-for="(item,index) in hots" :key="item.id">
+          <go-detail :list="hots" :index="index">
+            <image :src="item.thumb" mode="scaleToFill" />
+          </go-detail>
         </view>
       </view>
     </view>
@@ -47,6 +56,8 @@
 
 <script>
 import moment from "moment";
+import goDetail from "@/components/goDetail";
+
 export default {
   data() {
     return {
@@ -61,11 +72,14 @@ export default {
       hasMore: true
     };
   },
+  components: {
+    goDetail
+  },
   mounted() {
     this.getData();
     uni.setNavigationBarTitle({
-      title:"推荐"
-    })
+      title: "推荐"
+    });
   },
   methods: {
     handleToLower() {
@@ -84,7 +98,6 @@ export default {
         url: "http://157.122.54.189:9088/image/v3/homepage/vertical",
         data: this.params
       }).then(result => {
-        console.log(result);
         // 判断有没有下一页数据
         if (result.res.vertical.length == 0) {
           this.hasMore = false;
@@ -128,7 +141,7 @@ export default {
     padding: 20rpx;
 
     .monthes_title_info {
-      color: #d83a88;
+      color: $color;
       font-size: 30rpx;
       font-weight: 600;
       display: flex;
@@ -146,7 +159,7 @@ export default {
     }
     .monthes_title_more {
       font-size: 24rpx;
-      color: #d83a88;
+      color: $color;
     }
   }
 
@@ -164,7 +177,7 @@ export default {
   .hots_title {
     padding: 20rpx;
     text {
-      border-left: 20rpx solid #d83a88;
+      border-left: 20rpx solid $color;
       padding-left: 20rpx;
       font-size: 34rpx;
       font-weight: 600;
