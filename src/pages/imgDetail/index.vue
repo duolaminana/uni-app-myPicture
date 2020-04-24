@@ -109,7 +109,7 @@
 
     <!-- 下载 -->
     <view class="download">
-      <view class="download_btn">下载图片</view>
+      <view class="download_btn" @click="handleDownload">下载图片</view>
     </view>
   </view>
 </template>
@@ -139,15 +139,40 @@ export default {
   },
 
   methods: {
+    async handleDownload() {
+      await uni.showLoading({
+        title: "下载中"
+      });
+      console.log(11111);
+
+      // 远程文件下载到内存中
+      const result1 = await uni.downloadFile({ url: this.imgDetail.img });
+      console.log(result1);
+      const { tempFilePath } = result1[1];
+      console.log(2222);
+      // 内存文件添加到本地
+      const result2 = await uni.saveImageToPhotosAlbum({
+        filePath: tempFilePath
+      });
+      console.log(result2);
+
+      console.log(3333);
+      uni.hideLoading();
+      uni.showToast({
+        title: "下载成功"
+      });
+
+    },
     getData() {
       this.imgList = getApp().globalData.imgList;
       this.imgDetail = this.imgList[this.imgIndex];
       this.imgDetail.cnTime = moment(this.imgDetail.atime * 1000).fromNow();
       this.getComments(this.imgDetail.id);
     },
+    // 翻页
     handleSwiperAction(e) {
       console.log(e);
-      if (e.direction == "left" && this.imgIndex < this.imgList.length-1) {
+      if (e.direction == "left" && this.imgIndex < this.imgList.length - 1) {
         this.imgIndex++;
         this.getData();
       } else if (e.direction == "right" && this.imgIndex > 0) {

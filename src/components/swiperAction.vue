@@ -31,7 +31,7 @@ export default {
         return;
       }
 
-      if (Math.abs(this.endX - this.startX) > 10) {
+      if (Math.abs(this.endX - this.startX) > 10&&Math.abs(this.endY - this.startY)<10) {
         this.endX - this.startX > 0
           ? (direction = "right")
           : (direction = "left");
